@@ -1,31 +1,18 @@
 {% import _self as generator %}
 {% set pages = paginator.getPaginationData %}
 
-{% macro generate_seo_pagination_url(page) %}
-    {% apply spaceless %}
-        {% if page == 1 %}
-            {% set pageUrl = pimcore_url({ page: null }) %}
-        {% else %}
-            {% set pageUrl = pimcore_url({ page: page }) %}
-        {% endif %}
-
-        {{ pageUrl }}
-        {#{{ optimizedUrl }}#}
-    {% endapply %}
-{% endmacro %}
-
 {% if pages.pageCount > 1 %}
     <div class="row">
         <div class="col-sm-6 pagination-block">
             <ul class="pagination">
                 {% if pages.previous is defined %}
                     {% if pages.previous %}
-                        <li class="page-item"><a class="page-link" href="{{ generator.generate_seo_pagination_url(pages.previous) }}">«</a></li>
+                        <li class="page-item"><a class="page-link" href="{{ pimcore_url({ page: pages.previous }) }}">«</a></li>
                     {% endif %}
                 {% endif %}
 
                 {% for page in pages.pagesInRange %}
-                    <li class="page-item {% if page == pages.current  %} active {% endif %}"><a class="page-link" href="{{ generator.generate_seo_pagination_url(page) }}">{{ page }}</a></li>
+                    <li class="page-item {% if page == pages.current  %} active {% endif %}"><a class="page-link" href="{{ pimcore_url({ page: page }) }}">{{ page }}</a></li>
                 {% endfor %}
 
                 {% if pages.next is defined %}
